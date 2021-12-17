@@ -14,6 +14,10 @@ Original code of DigitalFeed 7e2 is provided in the [folder above](https://githu
 
 Notably, it doesn't support belt connection for Z or X motors yet.
 
+## Manual
+
+There's a [short manual](https://github.com/kachurovskiy/megaels/blob/main/manual.md) that I auto-translated and corrected a bit but expect to spend some quality time with it to get anything done :)
+
 ## PCB
 
 ![megaels_2012-12-05](https://user-images.githubusercontent.com/517919/146578632-993fc083-6fc4-4a29-a345-051907fbcaa5.jpg)
