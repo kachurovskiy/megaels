@@ -30,18 +30,19 @@ Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use a
 
 ## Components
 
-- Arduino Mega 2560
-- 1602 LCD
-- 9 6\*6 push buttons
+- [Arduino Mega 2560](https://www.aliexpress.com/item/32850843888.html) (micro USB)
+- [1602 LCD 5V](https://www.aliexpress.com/item/32326489466.html)
+- [9 6\*6 push buttons](https://www.aliexpress.com/item/32862548214.html)
 - 4 LEDs
-- 4 eight-position switches (model SR16)
-- Manual pulse generator
-- 4-position joystick with latching and a button
-- 2 RV09 10kOhm potentiometers
-- KF2EDG connectors with 3.5mm pitch - 5 with 4 pins, 1 with 6 pins (make sure to order both parts of each connector)
-- 4 1kOhm resistor arrays with 9 resistors each
+- [4 eight-position switches](https://www.aliexpress.com/item/4000700310059.html)
+- [Manual pulse generator 5V 4-pin 100 pulses](https://www.aliexpress.com/item/32949618549.html)
+- [4-position joystick with latching and a button](https://www.aliexpress.com/item/4000893010190.html) though this one is a little too big and hard to switch
+- [2 RV09 10kOhm potentiometers](https://www.aliexpress.com/item/4000078097697.html)
+- [KF2EDG connectors with 3.5mm pitch](https://www.aliexpress.com/item/1005003085954456.html) - 5x4 pins, 1x6 pins, make sure to order both plug and needle
+- [4 1kOhm resistor arrays with 9 resistors each](https://www.aliexpress.com/item/32840103807.html)
 - 2 1kOhm resistors and 4 680 Ohm resistors
 - 5V buzzer
+- 2 ceramic capacitors e.g. 10 uF
 
 ## Schematics
 
