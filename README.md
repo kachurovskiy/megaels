@@ -18,7 +18,7 @@ Notably, it doesn't support belt connection for Z or X motors yet.
 
 ![megaels_2012-12-05](https://user-images.githubusercontent.com/517919/146578632-993fc083-6fc4-4a29-a345-051907fbcaa5.jpg)
 
-[Gerber files for production](https://github.com/kachurovskiy/megaels/raw/main/Gerber_PCB_MegaEls_20211205.zip)
+[Gerber files for production](https://github.com/kachurovskiy/megaels/raw/PCB_20211205/Gerber_PCB_MegaEls_20211205.zip)
 
 Some PCB production techniques use lead and other nasty stuff. Order at your own risk and dispose properly.
 
@@ -37,3 +37,7 @@ Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use a
 - KF2EDG connectors with 3.5mm pitch - 5 with 4 pins, 1 with 6 pins (make sure to order both parts of each connector)
 - 4 1kOhm resistor arrays with 9 resistors each
 - 2 1kOhm resistors and 4 680 Ohm resistors
+
+## Schematics
+
+![MegaEls schematics](https://github.com/kachurovskiy/megaels/raw/main/PCB_20211205/Schematic_MegaEls_2021-12-05.png)
