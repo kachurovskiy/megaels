@@ -22,7 +22,7 @@ Notably, it doesn't support belt connection for Z or X motors yet.
 
 Some PCB production techniques use lead and other nasty stuff. Order at your own risk and dispose properly.
 
-Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use all default settings, choose shipping and checkout.
+Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use all default settings, choose shipping and checkout. Costs around 20 euro with delivery for 5 PCBs (minumum order).
 
 ## Components
 
