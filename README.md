@@ -16,7 +16,7 @@ Notably, it doesn't support belt connection for Z or X motors yet.
 
 ## Manual
 
-There's a [short manual](https://github.com/kachurovskiy/megaels/blob/main/manual.md) that I auto-translated and corrected a bit but expect to spend some quality time with it to get anything done :)
+There are [some instructions explaining how to operate the ELS](https://github.com/kachurovskiy/megaels/blob/main/Digital_Feed_7e2/manual.md) that I auto-translated and corrected a bit but expect to invest some time here :)
 
 ## PCB
 
