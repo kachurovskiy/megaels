@@ -1,0 +1,361 @@
+{
+  "uuid": "8a5d9d7de79dfccc1a597dd06671620c",
+  "path": "Offline/MegaEls",
+  "name": "MegaEls",
+  "content": "",
+  "created_at": "2021-12-17 19:15:18",
+  "updated_at": "2021-12-17 19:15:45",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "f3f4857a17562bcf7fcdea9f740498c4",
+      "title": "MegaElsSchematics",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "c4ee9d81f5434f76805d2fd140196f48": 2,
+        "22b7c0ac9b0f4aa2a4c29bd3898059db": 9,
+        "acc474c4f864430faafdd58cb63e026b": 1,
+        "a05e2b58737f40c0bfae266d01bdfc0a": 6,
+        "f486a413581c44799a436ecba754f379": 4,
+        "5e55dcc463ac42438e8b1ba7e180b728": 4,
+        "9a57aae7d1e54e6788b6943d0bf3b4ca": 1,
+        "5d71bb5b30f34e2dad85abb9f54193c2": 4,
+        "55edcca61ce64bcf8d254c74deff4882": 2,
+        "e4929ea26a294bb68c541cd7523ee013": 1,
+        "23f8c369ec684d90a73468e1a56bcbe9": 5,
+        "c45b47ad4db741fc9c1fd20b14c6446b": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "RT1",
+          6,
+          "RTH025W",
+          "0.6K-L1,0.6K-L2,0.6K-L3,0.6K-L4,1K-ENCA,1K-ENCB",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "cb8201f67805495e80041846ebc6ff33",
+            "uuid": "a05e2b58737f40c0bfae266d01bdfc0a"
+          }
+        ],
+        [
+          "8x (9pin) Resistor Array",
+          4,
+          "SIL9",
+          "1KOHM1,1KOHM2,1KOHM3,1KOHM4",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "7c201e6992d6487a89fa45b99eb2c5bc",
+            "uuid": "5e55dcc463ac42438e8b1ba7e180b728"
+          }
+        ],
+        [
+          "MEGA2560",
+          1,
+          "MEGA",
+          "ARDUINO",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "81ed53fe79ed430aaaa34aec9e607de1",
+            "uuid": "9a57aae7d1e54e6788b6943d0bf3b4ca"
+          }
+        ],
+        [
+          "SR16 8P OUT",
+          4,
+          "SR16_8P",
+          "AXIS,MODE,SCALE,SUBMODE",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "TLZWLA",
+            "puuid": "0e1b2e0ca8fc4473bc4b9695acfcffbb",
+            "uuid": "5d71bb5b30f34e2dad85abb9f54193c2"
+          }
+        ],
+        [
+          "RV09",
+          2,
+          "RV09",
+          "BRIGHT,FEED",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "RV09",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "4f52decd8a8d4c00bb408ec5ad43fc0c",
+            "uuid": "c4ee9d81f5434f76805d2fd140196f48"
+          }
+        ],
+        [
+          "BUZZER",
+          1,
+          "BUZZER-12MM-NS-KIT",
+          "BUZZ",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "27d6707ea0f24192bbd3285861a88062",
+            "uuid": "e4929ea26a294bb68c541cd7523ee013"
+          }
+        ],
+        [
+          "10uF",
+          2,
+          "CAP-TH_L5.0-W4.0-P5.00-D1.0",
+          "C1,C2",
+          {
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "puuid": "30003a4557d5483e9e4d774ffa7189c8",
+            "uuid": "55edcca61ce64bcf8d254c74deff4882"
+          }
+        ],
+        [
+          "KF2EDGV-3.5-4P",
+          5,
+          "CONN-TH_4P-P3.50_KF2EDGV-3.5-4P",
+          "DRIVERX,DRIVERZ,PULSE,SPINDLE,VIN+TACHO",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C441323",
+            "BOM_Manufacturer": "Cixi Kefa Elec",
+            "BOM_Manufacturer Part": "KF2EDGV-3.5-4P",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "dff3c86ddcb6421482dd072fc94d6fb2",
+            "uuid": "23f8c369ec684d90a73468e1a56bcbe9"
+          }
+        ],
+        [
+          "KF2EDGV-3.5-6P",
+          1,
+          "CONN-TH_6P-P3.50_KF2EDGV-3.5-6P",
+          "JOY",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C441325",
+            "BOM_Manufacturer": "Cixi Kefa Elec",
+            "BOM_Manufacturer Part": "KF2EDGV-3.5-6P",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "0a03e994a69844dcb34b25e3345951af",
+            "uuid": "c45b47ad4db741fc9c1fd20b14c6446b"
+          }
+        ],
+        [
+          "1602 LCD",
+          1,
+          "LCM1602K-80X36MM",
+          "LCD",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "LONTECH",
+            "BOM_Manufacturer Part": "LCM1602K-FL-YBW-33V33",
+            "BOM_Supplier Part": "C83273",
+            "puuid": "ac6b4d06b3a34f358ba5a189c74a7318",
+            "uuid": "acc474c4f864430faafdd58cb63e026b"
+          }
+        ],
+        [
+          "TJ-L3FYTLDRMFCSFLC2R-A5",
+          4,
+          "LED-TH_BD3.8-P2.54-FD",
+          "LEDD,LEDL,LEDR,LEDU",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C440523",
+            "BOM_Manufacturer": "TOGIALED",
+            "BOM_Manufacturer Part": "TJ-L3FYTLDRMFCSFLC2R-A5",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "420d2fe0c7db4324a0a2c525262636b9",
+            "uuid": "f486a413581c44799a436ecba754f379"
+          }
+        ],
+        [
+          "LIMITD",
+          1,
+          "TACTILE SWITCH",
+          "LIMITD",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "LIMITL",
+          1,
+          "TACTILE SWITCH",
+          "LIMITL",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "LIMITR",
+          1,
+          "TACTILE SWITCH",
+          "LIMITR",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "LIMITU",
+          1,
+          "TACTILE SWITCH",
+          "LIMITU",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "MENUD",
+          1,
+          "TACTILE SWITCH",
+          "MENUD",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "MENUL",
+          1,
+          "TACTILE SWITCH",
+          "MENUL",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "MENUR",
+          1,
+          "TACTILE SWITCH",
+          "MENUR",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "MENUS",
+          1,
+          "TACTILE SWITCH",
+          "MENUS",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ],
+        [
+          "MENUU",
+          1,
+          "TACTILE SWITCH",
+          "MENUU",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "70b3f2ab9850469a98416b24a3e50ed2",
+            "uuid": "22b7c0ac9b0f4aa2a4c29bd3898059db"
+          }
+        ]
+      ],
+      "updateTime": 1638729227,
+      "createTime": 1623595583,
+      "histories": [],
+      "created_at": "2021-06-13 16:46:23",
+      "updated_at": "2021-12-05 19:33:47"
+    },
+    {
+      "uuid": "3746b920490d9c3676bf5678c8d309f6",
+      "title": "PCB_MegaEls",
+      "filename": "PCB_MegaEls.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "dff3c86ddcb6421482dd072fc94d6fb2": 5,
+        "7c201e6992d6487a89fa45b99eb2c5bc": 4,
+        "0a03e994a69844dcb34b25e3345951af": 1,
+        "0e1b2e0ca8fc4473bc4b9695acfcffbb": 4,
+        "81ed53fe79ed430aaaa34aec9e607de1": 1,
+        "27d6707ea0f24192bbd3285861a88062": 1,
+        "420d2fe0c7db4324a0a2c525262636b9": 4,
+        "70b3f2ab9850469a98416b24a3e50ed2": 9,
+        "cb8201f67805495e80041846ebc6ff33": 6,
+        "4f52decd8a8d4c00bb408ec5ad43fc0c": 2,
+        "30003a4557d5483e9e4d774ffa7189c8": 2,
+        "ac6b4d06b3a34f358ba5a189c74a7318": 1
+      },
+      "BOM": [],
+      "updateTime": 1638730090,
+      "createTime": 1623617351,
+      "histories": [],
+      "created_at": "2021-06-13 22:49:11",
+      "updated_at": "2021-12-05 19:48:10"
+    }
+  ],
+  "sort": [
+    "f3f4857a17562bcf7fcdea9f740498c4",
+    "72c461f2945e49c6a62f355e083c2d7c"
+  ],
+  "title": "MegaEls",
+  "foldername": "MegaEls",
+  "schfilename": "MegaEls.json",
+  "schfilemtime": 1639764932169
+}
