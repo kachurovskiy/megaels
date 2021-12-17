@@ -41,6 +41,7 @@ Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use a
 - KF2EDG connectors with 3.5mm pitch - 5 with 4 pins, 1 with 6 pins (make sure to order both parts of each connector)
 - 4 1kOhm resistor arrays with 9 resistors each
 - 2 1kOhm resistors and 4 680 Ohm resistors
+- 5V buzzer
 
 ## Schematics
 
