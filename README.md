@@ -10,7 +10,9 @@ Metal lathe electronic lead screw project built on top of Russian-speaking [Digi
 
 ## Code
 
-Original code of DigitalFeed 7e2 is provided in the folder above. It requires tuning a few constants at the top of the main file to fit your lathe and motors.
+Original code of DigitalFeed 7e2 is provided in the [folder above](https://github.com/kachurovskiy/megaels/tree/main/Digital_Feed_7e2). It requires tuning a few constants at the top of the main file to fit your lathe and motors.
+
+Notably, it doesn't support belt connection for Z or X motors yet.
 
 ## PCB
 
