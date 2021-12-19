@@ -22,7 +22,7 @@ There are [some instructions explaining how to operate the ELS](https://github.c
 
 ![megaels_2012-12-05](https://user-images.githubusercontent.com/517919/146578632-993fc083-6fc4-4a29-a345-051907fbcaa5.jpg)
 
-[Gerber files for production](https://github.com/kachurovskiy/megaels/raw/PCB_20211205/Gerber_PCB_MegaEls_20211205.zip)
+[Gerber files for production](https://github.com/kachurovskiy/megaels/raw/main/PCB_20211205/Gerber_PCB_MegaEls_20211205.zip)
 
 Some PCB production techniques use lead and other nasty stuff. Order at your own risk and dispose properly.
 
