@@ -6,7 +6,7 @@ While the PCB is confirmed to work overall, it's very early days for this projec
 
 Metal lathe electronic lead screw project built on top of Russian-speaking [DigitalFeed ELS system by Oleg A. and contributors from ChipMaker.ru](https://www.chipmaker.ru/topic/118083/).
 
-![megaels-example](https://user-images.githubusercontent.com/517919/146578580-5ed5b854-83fb-4121-9611-b14a97ffb6ef.jpg)
+![megaels-example](https://user-images.githubusercontent.com/517919/147279909-92772466-749f-495c-bee4-87cd6dff6e9c.jpg)
 
 ## Code
 
