@@ -45,6 +45,16 @@ Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use a
 - 2 ceramic capacitors e.g. 10 uF
 - 4 LEDs
 
+## Cases
+
+![megaels_2012-12-05](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case.png)
+
+Download: [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-body.stl) and [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-lid.stl) or [f3d](https://github.com/kachurovskiy/megaels/raw/main/cases/MegaElsCase.f3d)
+
+![megaels_2012-12-05](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-mpg.png)
+
+Download: [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-mpg-body.stl) and [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-mpg-lid.stl) or [f3d](https://github.com/kachurovskiy/megaels/raw/main/cases/MegaElsMPG.f3d)
+
 ## Schematics
 
 ![MegaEls schematics](https://github.com/kachurovskiy/megaels/raw/main/PCB_20211205/Schematic_MegaEls_2021-12-05.png)
