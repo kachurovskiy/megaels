@@ -49,11 +49,17 @@ Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use a
 
 The following cases are designed to be used with [M3 threaded inserts](https://www.aliexpress.com/item/32430148405.html) that would be pushed into the 4 designated holes using your soldering iron tip and receive M3 [nylon screws (for MPG) or 20mm standoffs (for the main case)](https://www.aliexpress.com/item/32617866125.html). 
 
+![PXL_20211223_072057249](https://user-images.githubusercontent.com/517919/147203844-d22eabe9-e8a2-4fb9-9448-6c39bb4879f6.jpg)
+
 ### Main case
 
 ![megaels_2012-12-05](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case.png)
 
-Here the lid is connected using nylon screws into 20mm standoffs that work as screws holding the PCB down. Download: [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-body.stl) and [STL lid](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-lid.stl) or [f3d](https://github.com/kachurovskiy/megaels/raw/main/cases/MegaElsCase.f3d)
+Here the lid is connected using nylon screws into 20mm standoffs that work as screws holding the PCB down. It's designed to be mounted using two M5 bolts 135mm apart on centers.
+
+Cut 1 line on the right side of the case and push the small part of the wall to the outside to get access to the mini USB port of the Arduino.
+
+Download: [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-body.stl) and [STL lid](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-lid.stl) or [f3d](https://github.com/kachurovskiy/megaels/raw/main/cases/MegaElsCase.f3d)
 
 ### MPG case
 
