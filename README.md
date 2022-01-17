@@ -59,6 +59,8 @@ Cut 1 line on the right side of the case and push the small part of the wall to 
 
 Download: [STL body](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-body.stl) and [STL lid](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-case-lid.stl) or [f3d](https://github.com/kachurovskiy/megaels/raw/main/cases/MegaElsCase.f3d)
 
+[Printable SVG](https://github.com/kachurovskiy/megaels/raw/main/megaels-face.svg) with labels for the controls.
+
 ### MPG case
 
 ![megaels_2012-12-05](https://github.com/kachurovskiy/megaels/raw/main/cases/megaels-mpg.png)
