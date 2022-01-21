@@ -62,14 +62,14 @@ void H_Coder()
 
       if (Motor_Z_Pos < Null_Z_Pos + Hand_Z_Pos)
       {
-         Motor_Z_Dir = CW;
+         Motor_Z_Dir = ZCW;
          Motor_Z_CW();
          Limit_Pos_HC = Null_Z_Pos + Hand_Z_Pos - Brake_Compens;
          Limit_Pos = Limit_Pos_Left - Brake_Compens;
       }
       else if (Motor_Z_Pos > Null_Z_Pos + Hand_Z_Pos)
       {
-         Motor_Z_Dir = CCW;
+         Motor_Z_Dir = ZCCW;
          Motor_Z_CCW();
          Limit_Pos_HC = Null_Z_Pos + Hand_Z_Pos + Brake_Compens;
          Limit_Pos = Limit_Pos_Right + Brake_Compens;

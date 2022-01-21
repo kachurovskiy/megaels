@@ -39,7 +39,7 @@ void aFeed_Left(bool & a_flag, bool & b_flag)
    Brake_Compens = (max_OCR4A - aFeed_Divisor) +1;
    Limit_Pos = Limit_Pos_Left - Brake_Compens;
 
-   Motor_Z_Dir = CW;
+   Motor_Z_Dir = ZCW;
    Motor_Z_CW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
    
@@ -85,7 +85,7 @@ void aFeed_Right(bool & a_flag, bool & b_flag)
    Brake_Compens = (max_OCR4A - aFeed_Divisor) +1;
    Limit_Pos = Limit_Pos_Right + Brake_Compens;
 
-   Motor_Z_Dir = CCW;
+   Motor_Z_Dir = ZCCW;
    Motor_Z_CCW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
    
@@ -208,4 +208,3 @@ void aFeed_Int_Right()
 {
   
 }
-

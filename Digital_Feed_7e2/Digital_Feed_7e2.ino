@@ -2,23 +2,24 @@
 #include <util/delay.h>
 
 //////////////////////////////////
-// ***** ПАРАМЕТРЫ ЖЕЛЕЗА ***** //
+// ***** HARDWARE PARAMS  ***** //
 
-#define ENC_LINE_PER_REV     1800     // Кол-во линий энкодера на 1 оборот шпинделя
-#define MOTOR_Z_STEP_PER_REV 200      // Кол-во шагов на оборот винта Z, продольная
-#define SCREW_Z              150      // Шаг продольного винта Z в сотках, 1.5мм
-#define McSTEP_Z             4        // Микрошаг, ось Z, продольная
-#define MOTOR_X_STEP_PER_REV 200      // Кол-во шагов на оборот винта X, поперечная
-#define SCREW_X              100      // Шаг поперечного винта X в сотках, 1.0мм
-#define REBOUND_X            400      // Отскок резца в микрошагах, для авторезьбы, должен быть больше люфта поперечки
-#define REBOUND_Z            400      //
-#define McSTEP_X             4        // Микрошаг, ось X, поперечная
+#define ENC_LINE_PER_REV     600      // Encoder lines per 1 spindle turn
+#define MOTOR_Z_STEP_PER_REV 200      // Z motor steps (leadscrew) - almost always 200, microsteps configured below
+#define SCREW_Z              200      // Z (leadscrew) pitch, in hundreds of a mm
+#define McSTEP_Z             4        // Z driver microsteps (400 steps = 2, 800 steps = 4, etc)
+#define Z_INVERT                      // Comment this line if Z motor is connected directly to the lead screw, uncomment if via belt
+#define MOTOR_X_STEP_PER_REV 200      // X motor steps (cross-slide) - almost always 200, microsteps configured below
+#define SCREW_X              42       // X (cross-slide) pitch, in hundreds of a mm
+#define REBOUND_X            200      // X backlash in microsteps
+#define REBOUND_Z            200      // Z backlash in microsteps
+#define McSTEP_X             2        // Z driver microsteps (400 steps = 2, 800 steps = 4, etc)
 //
 #define THRD_ACCEL           25       // К.деления с которого будем ускоряться на Резьбах, Accel+Ks должен быть < 255
 #define FEED_ACCEL           3        // Жесткость разгона на подачах, бОльше значение - короче разгон.
 //
 #define MIN_FEED             2        // Желаемая минимальная подача  в сотках/оборот, 0.02мм/об
-#define MAX_FEED             25       // Желаемая максимальная подача в сотках/оборот, 0.25мм/об
+#define MAX_FEED             20       // Желаемая максимальная подача в сотках/оборот, 0.15мм/об
 #define MIN_aFEED            20       // Желаемая минимальная подача  в mm/минуту, 20мм/мин
 #define MAX_aFEED            400      // Желаемая максимальная подача в mm/минуту, 400мм/мин
 
@@ -34,7 +35,7 @@
 #define HC_MAX_SPEED_1       150      // максимум скорости РГИ, 250000/(150+1)/800*60/2 = 62rpm
 #define HC_START_SPEED_10    150      // старт РГИ, 250000/(150+1)/800*60/2 = 62rpm
 #define HC_MAX_SPEED_10      23       // максимум скорости РГИ, 250000/(23+1)/800*60/2 = 391rpm
-#define HC_X_DIR             1        // 1-поперечка по часовой, 0-против
+#define HC_X_DIR             0        // 1-поперечка по часовой, 0-против
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,13 @@ static_assert(h > 1, "Неверно задано значение MAX_aFEED");
 // ***** MY CONSTANT *****
 #define CW               0
 #define CCW              1
+#ifdef Z_INVERT
+  #define ZCW              1
+  #define ZCCW             0
+#else
+  #define ZCW              0
+  #define ZCCW             1
+#endif
 #define ON               1
 #define OFF              0
 
@@ -92,8 +100,13 @@ char LCD_Row_2[17];
 #define Motor_X_InvertPulse()  PORTL ^= (1<<1)      // Pin48
 #define Read_X_State           (PINL & (1<<1))
 
-#define Motor_Z_CW()           PORTL &= ~(1<<6)    // Pin43 0
-#define Motor_Z_CCW()          PORTL |= (1<<6)     // Pin43 1
+#ifdef Z_INVERT
+  #define Motor_Z_CCW()           PORTL &= ~(1<<6)    // Pin43 0
+  #define Motor_Z_CW()          PORTL |= (1<<6)     // Pin43 1
+#else
+  #define Motor_Z_CW()           PORTL &= ~(1<<6)    // Pin43 0
+  #define Motor_Z_CCW()          PORTL |= (1<<6)     // Pin43 1
+#endif
 
 #define Motor_X_CW()           PORTL &= ~(1<<5)    // Pin44 0
 #define Motor_X_CCW()          PORTL |= (1<<5)     // Pin44 1
@@ -263,28 +276,28 @@ struct cone_info_type
 };
 const cone_info_type Cone_Info[] =
 {
-   {  1,  3333,  "45dg" },
-   {  51, 2320,  " KM0" },  // 1:19,212
-   {  53, 4587,  " KM1" },  // 1:20,047
-   {  53, 3867,  " KM2" },  // 1:20,020
-   {  53, 1253,  " KM3" },  // 1:19,922
-   {  51, 3440,  " KM4" },  // 1:19,254
-   {  50, 6720,  " KM5" },  // 1:19,002
-   {  51, 1467,  " KM6" },  // 1:19,180
-   {  10, 6667,  " 1:4" },
-   {  13, 3333,  " 1:5" },
-   {  18, 6667,  " 1:7" },
-   {  26, 6667,  "1:10" },
-   {  42, 6667,  "1:16" },
-   {  53, 3333,  "1:20" },
-   {  64,    0,  "1:24" },
-   {  80,    0,  "1:30" },
-   { 133, 3333,  "1:50" },
-   {  24, 3810,  "7:64" },
-   {  9,  4872,  " 8dg" },
-   {  7,  5617,  "10dg" },
-   {  4,  9761,  "15dg" },
-   {  2,  3094,  "30dg" }
+   {  0,  8400,  "45dg" },
+   {  32, 2762,  " KM0" },  // 1:19,212
+   {  33, 6790,  " KM1" },  // 1:20,047
+   {  33, 6336,  " KM2" },  // 1:20,020
+   {  33, 4690,  " KM3" },  // 1:19,922
+   {  32, 3467,  " KM4" },  // 1:19,254
+   {  31, 9234,  " KM5" },  // 1:19,002
+   {  32, 2224,  " KM6" },  // 1:19,180
+   {  6,  7200,  " 1:4" },
+   {  8,  4000,  " 1:5" },
+   {  11, 7600,  " 1:7" },
+   {  16, 8000,  "1:10" },
+   {  26, 8800,  "1:16" },
+   {  33, 6000,  "1:20" },
+   {  40, 3200,  "1:24" },
+   {  50, 4000,  "1:30" },
+   {  84, 0000,  "1:50" },
+   {  15, 3600,  "7:64" },
+   {  5,  9769,  " 8dg" },
+   {  4,  7639,  "10dg" },
+   {  3,  1349,  "15dg" },
+   {  1,  4549,  "30dg" }
 };
 #define TOTAL_CONE (sizeof(Cone_Info) / sizeof(Cone_Info[0]))
 
@@ -303,50 +316,50 @@ struct thread_info_type
 };
 const thread_info_type Thread_Info[] =
 {                                                              // Считаем по формуле:
-   { 27,    0,   18,    0,   "0.25mm", 0.250,  4, " 750rpm" }, // Enc_Tick(3600)/(Step_Per_Revolution/Feed_Screw*Thread_mm)
-   { 22, 5000,   15,    0,   "0.30mm", 0.300,  4, " 750rpm" }, // Просчитан под 800 микрошагов/оборот винта (1/4 дробление, 1.5мм и 1.0мм шаг винтов)
-   { 19, 2857,   12, 8571,   "0.35mm", 0.350,  4, " 750rpm" },
-   { 16, 8750,   11, 2500,   "0.40mm", 0.400,  4, " 750rpm" },
-   { 13, 5000,    9,    0,   "0.50mm", 0.500,  4, " 750rpm" },
-   { 11, 2500,    7, 5000,   "0.60mm", 0.600,  4, " 750rpm" },
-   {  9, 6429,    6, 4286,   "0.70mm", 0.700,  4, " 750rpm" },
-   {  9,    0,    6,    0,   "0.75mm", 0.750,  5, " 750rpm" },
-   {  8, 4375,    5, 6250,   "0.80mm", 0.800,  5, " 700rpm" },
-   {  6, 7500,    4, 5000,   "1.00mm", 1.000,  6, " 560rpm" },
-   {  5, 4000,    3, 6000,   "1.25mm", 1.250,  7, " 460rpm" },
-   {  4, 5000,    3,    0,   "1.50mm", 1.500,  7, " 380rpm" },
-   {  3, 8571,    2, 5714,   "1.75mm", 1.750,  8, " 320rpm" },
-   {  3, 3750,    2, 2500,   "2.00mm", 2.000,  9, " 280rpm" },
-   {  2, 7000,    1, 8000,   "2.50mm", 2.500, 11, " 220rpm" },
-   {  2, 2500,    1, 5000,   "3.00mm", 3.000, 15, " 190rpm" },
-   {  1, 6875,    1, 1250,   "4.00mm", 4.000, 22, " 140rpm" },
+   { 12,    0,    5,  400,   "0.25mm", 0.250,  4, " 750rpm" }, // Enc_Tick(3600)/(Step_Per_Revolution/Feed_Screw*Thread_mm)
+   { 10,    0,    4, 2000,   "0.30mm", 0.300,  4, " 750rpm" }, // Просчитан под 800 микрошагов/оборот винта (1/4 дробление, 1.5мм и 1.0мм шаг винтов)
+   {  8, 5714,    3, 6000,   "0.35mm", 0.350,  4, " 750rpm" },
+   {  7, 5000,    3, 1500,   "0.40mm", 0.400,  4, " 750rpm" },
+   {  6,    0,    2, 5200,   "0.50mm", 0.500,  4, " 750rpm" },
+   {  5,    0,    2, 1000,   "0.60mm", 0.600,  4, " 750rpm" },
+   {  4, 2857,    1, 8000,   "0.70mm", 0.700,  4, " 750rpm" },
+   {  4,    0,    1, 6800,   "0.75mm", 0.750,  5, " 750rpm" },
+   {  3, 7500,    1, 5750,   "0.80mm", 0.800,  5, " 700rpm" },
+   {  3,    0,    1, 2600,   "1.00mm", 1.000,  6, " 560rpm" },
+   {  2, 4000,    1,   80,   "1.25mm", 1.250,  7, " 460rpm" },
+   {  2,    0,    0, 8400,   "1.50mm", 1.500,  7, " 380rpm" },
+   {  1, 7143,    0, 7200,   "1.75mm", 1.750,  8, " 320rpm" },
+   {  1, 5000,    0, 6300,   "2.00mm", 2.000,  9, " 280rpm" },
+   {  1, 2000,    0, 5040,   "2.50mm", 2.500, 11, " 220rpm" },
+   {  1,    0,    0, 4200,   "3.00mm", 3.000, 15, " 190rpm" },
+   {  0, 7500,    0, 3150,   "4.00mm", 4.000, 22, " 140rpm" },
    
-   { 21, 2598,   14, 1732,   "80tpi ", 0.318,  4, " 750rpm" },
-   { 19, 1339,   12, 7559,   "72tpi ", 0.353,  4, " 750rpm" },
-   { 17,   79,   11, 3386,   "64tpi ", 0.397,  4, " 750rpm" },
-   { 15, 9449,   10, 6299,   "60tpi ", 0.423,  4, " 750rpm" },
-   { 14, 8819,    9, 9213,   "56tpi ", 0.454,  4, " 750rpm" },
-   { 12, 7559,    8, 5039,   "48tpi ", 0.529,  4, " 750rpm" },
-   { 11, 6929,    7, 7953,   "44tpi ", 0.577,  4, " 750rpm" },
-   { 10, 6299,    7,  866,   "40tpi ", 0.635,  4, " 750rpm" },
-   {  9, 5669,    6, 3780,   "36tpi ", 0.706,  5, " 750rpm" },
-   {  8, 5039,    5, 6693,   "32tpi ", 0.794,  5, " 710rpm" },
-   {  7, 4409,    4, 9606,   "28tpi ", 0.907,  5, " 650rpm" },
-   {  7, 1752,    4, 7835,   "27tpi ", 0.941,  5, " 600rpm" },
-   {  6, 9095,    4, 6063,   "26tpi ", 0.977,  6, " 570rpm" },
-   {  6, 3780,    4, 2520,   "24tpi ", 1.058,  6, " 500rpm" },
-   {  5, 8465,    3, 8976,   "22tpi ", 1.155,  6, " 450rpm" },
-   {  5, 3150,    3, 5433,   "20tpi ", 1.270,  7, " 440rpm" },
-   {  5,  492,    3, 3661,   "19tpi ", 1.337,  7, " 420rpm" },
-   {  4, 7835,    3, 1890,   "18tpi ", 1.411,  7, " 380rpm" },
-   {  4, 2520,    2, 8346,   "16tpi ", 1.588,  8, " 350rpm" },
-   {  3, 7205,    2, 4803,   "14tpi ", 1.814,  9, " 320rpm" },
-   {  3, 1890,    2, 1260,   "12tpi ", 2.117, 10, " 270rpm" },
-   {  2, 6575,    1, 7717,   "10tpi ", 2.540, 11, " 220rpm" },
-   {  2, 3917,    1, 5945,   " 9tpi ", 2.822, 14, " 190rpm" },
-   {  2, 1260,    1, 4173,   " 8tpi ", 3.175, 16, " 170rpm" },
-   {  1, 8602,    1, 2402,   " 7tpi ", 3.629, 19, " 150rpm" },
-   {  1, 5945,    1,  630,   " 6tpi ", 4.233, 24, " 140rpm" }
+   {  9, 4488,    3, 9685,   "80tpi ", 0.318,  4, " 750rpm" },
+   {  8, 5039,    3, 5717,   "72tpi ", 0.353,  4, " 750rpm" },
+   {  7, 5591,    3, 1748,   "64tpi ", 0.397,  4, " 750rpm" },
+   {  7,  866,    2, 9764,   "60tpi ", 0.423,  4, " 750rpm" },
+   {  6, 6142,    2, 7780,   "56tpi ", 0.454,  4, " 750rpm" },
+   {  5, 6693,    2, 3811,   "48tpi ", 0.529,  4, " 750rpm" },
+   {  5, 1969,    2, 1827,   "44tpi ", 0.577,  4, " 750rpm" },
+   {  4, 7244,    1, 9843,   "40tpi ", 0.635,  4, " 750rpm" },
+   {  4, 2520,    1, 7858,   "36tpi ", 0.706,  5, " 750rpm" },
+   {  3, 7795,    1, 5874,   "32tpi ", 0.794,  5, " 710rpm" },
+   {  3, 3071,    1, 3890,   "28tpi ", 0.907,  5, " 650rpm" },
+   {  3, 1890,    1, 3394,   "27tpi ", 0.941,  5, " 600rpm" },
+   {  3,  709,    1, 2898,   "26tpi ", 0.977,  6, " 570rpm" },
+   {  2, 8346,    1, 1906,   "24tpi ", 1.058,  6, " 500rpm" },
+   {  2, 5984,    1,  913,   "22tpi ", 1.155,  6, " 450rpm" },
+   {  2, 3622,    0, 9921,   "20tpi ", 1.270,  7, " 440rpm" },
+   {  2, 2441,    0, 9425,   "19tpi ", 1.337,  7, " 420rpm" },
+   {  2, 1260,    0, 8929,   "18tpi ", 1.411,  7, " 380rpm" },
+   {  1, 8898,    0, 7937,   "16tpi ", 1.588,  8, " 350rpm" },
+   {  1, 6535,    0, 6945,   "14tpi ", 1.814,  9, " 320rpm" },
+   {  1, 4173,    0, 5953,   "12tpi ", 2.117, 10, " 270rpm" },
+   {  1, 1811,    0, 4961,   "10tpi ", 2.540, 11, " 220rpm" },
+   {  1,  630,    0, 4465,   " 9tpi ", 2.822, 14, " 190rpm" },
+   {  0, 9449,    0, 3969,   " 8tpi ", 3.175, 16, " 170rpm" },
+   {  0, 8268,    0, 3472,   " 7tpi ", 3.629, 19, " 150rpm" },
+   {  0, 7087,    0, 2976,   " 6tpi ", 4.233, 24, " 140rpm" }
 };
 #define TOTAL_THREADS (sizeof(Thread_Info) / sizeof(Thread_Info[0]))
 #define PASS_FINISH   3 // THRD_PS_FN ???
@@ -655,7 +668,7 @@ void setup()
   Beeper_Off();
   
   Spindle_Dir = CW;
-  Motor_Z_Dir = CW;
+  Motor_Z_Dir = ZCW;
   Joy_Z_flag = OFF;
   Step_Z_flag = OFF;
   Motor_X_Dir = CW;
@@ -751,7 +764,7 @@ ISR(INT0_vect)
    
    if (Step_Z_flag == ON)
    {   Motor_Z_RemovePulse();
-      if ( (Motor_Z_Dir == CW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == CCW && Motor_Z_Pos < Limit_Pos) || (!Joy_Z_flag) )
+      if ( (Motor_Z_Dir == ZCW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == ZCCW && Motor_Z_Pos < Limit_Pos) || (!Joy_Z_flag) )
       {
          if (tmp_Ks_Divisor < tmp_Accel)
          {
@@ -759,7 +772,7 @@ ISR(INT0_vect)
             if (Ks_Count > tmp_Ks_Divisor)
             {
                Motor_Z_SetPulse();
-               if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+               if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
                else {Motor_Z_Pos --;}
                Ks_Count = 0;
                if (++Repeat_Count == REPEAt)
@@ -778,7 +791,7 @@ ISR(INT0_vect)
          if (Ks_Count > tmp_Ks_Divisor)
          {
             Motor_Z_SetPulse();
-            if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+            if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
             else {Motor_Z_Pos --;}
          
             if (tmp_Ks_Divisor > Ks_Divisor)
@@ -894,7 +907,7 @@ ISR (TIMER5_COMPA_vect)
       Tacho_Count = Tacho_Count - ENC_LINE_PER_REV;
    }
    
-   if ( (Motor_Z_Dir == CW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == CCW && Motor_Z_Pos < Limit_Pos) || (!feed_Z_flag) )
+   if ( (Motor_Z_Dir == ZCW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == ZCCW && Motor_Z_Pos < Limit_Pos) || (!feed_Z_flag) )
    {
       if (OCR5A < max_OCR5A)
       {
@@ -902,7 +915,7 @@ ISR (TIMER5_COMPA_vect)
          if (!Read_Z_State)
          {
             OCR5A++;
-            if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+            if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
             else {Motor_Z_Pos --;}
          }
       }
@@ -919,7 +932,7 @@ ISR (TIMER5_COMPA_vect)
       Motor_Z_InvertPulse();
       if (!Read_Z_State)
       {
-         if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+         if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
          else {Motor_Z_Pos --;}
       
          if (OCR5A > Feed_Divisor) {OCR5A--;}
@@ -1005,14 +1018,14 @@ ISR (TIMER5_COMPB_vect)
 ISR (TIMER2_COMPA_vect)
 {
    Motor_X_RemovePulse();
-   if ( (Motor_Z_Dir == CW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == CCW && Motor_Z_Pos < Limit_Pos) || (!rapid_Z_flag) )
+   if ( (Motor_Z_Dir == ZCW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == ZCCW && Motor_Z_Pos < Limit_Pos) || (!rapid_Z_flag) )
    {
       if (OCR2A < MIN_RAPID_MOTION)
       {
          Motor_Z_InvertPulse();
          if (!Read_Z_State)
          {
-            if (Motor_Z_Dir == CW) { Motor_Z_Pos ++; }
+            if (Motor_Z_Dir == ZCW) { Motor_Z_Pos ++; }
             else { Motor_Z_Pos --; }
 
             if (++Repeat_Count == REPEAt)
@@ -1035,7 +1048,7 @@ ISR (TIMER2_COMPA_vect)
       Motor_Z_InvertPulse();
       if (!Read_Z_State)
       {
-         if (Motor_Z_Dir == CW) { Motor_Z_Pos ++; }
+         if (Motor_Z_Dir == ZCW) { Motor_Z_Pos ++; }
          else { Motor_Z_Pos --; }
 
          if (OCR2A > MAX_RAPID_MOTION)
@@ -1122,7 +1135,7 @@ ISR (TIMER2_COMPB_vect)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ISR (TIMER4_COMPA_vect)
 {
-   if ( (Motor_Z_Dir == CW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == CCW && Motor_Z_Pos < Limit_Pos) || (!feed_Z_flag) )
+   if ( (Motor_Z_Dir == ZCW && Motor_Z_Pos > Limit_Pos) || (Motor_Z_Dir == ZCCW && Motor_Z_Pos < Limit_Pos) || (!feed_Z_flag) )
    {
       if (OCR4A < max_OCR4A)
       {
@@ -1130,7 +1143,7 @@ ISR (TIMER4_COMPA_vect)
          if (!Read_Z_State)
          {
             OCR4A ++;
-            if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+            if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
             else                   {Motor_Z_Pos --;}
          }
       }
@@ -1147,7 +1160,7 @@ ISR (TIMER4_COMPA_vect)
       Motor_Z_InvertPulse();
       if (!Read_Z_State)
       {
-         if (Motor_Z_Dir == CW) {Motor_Z_Pos ++;}
+         if (Motor_Z_Dir == ZCW) {Motor_Z_Pos ++;}
          else                   {Motor_Z_Pos --;}
 
          if      (OCR4A > aFeed_Divisor) {OCR4A --;}
@@ -1217,7 +1230,7 @@ ISR(INT2_vect)
 /////////////////////////////////////////////
 ISR (TIMER3_COMPA_vect)
 {   
-   if (Motor_Z_Dir == CW)
+   if (Motor_Z_Dir == ZCW)
    {
       if (Motor_Z_Pos < Null_Z_Pos + Hand_Z_Pos)
       {
@@ -1241,7 +1254,7 @@ ISR (TIMER3_COMPA_vect)
       }
    }
 
-   else if (Motor_Z_Dir == CCW)
+   else if (Motor_Z_Dir == ZCCW)
    {
       if (Motor_Z_Pos > Null_Z_Pos + Hand_Z_Pos)
       {

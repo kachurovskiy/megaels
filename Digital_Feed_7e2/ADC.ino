@@ -29,7 +29,7 @@ void Read_ADC_Feed()
             if (Joy_Z_flag == ON && Button_Rapid != 0 && Step_Z_flag == ON)
             {
                b_flag = false;
-               if (Motor_Z_Dir == CW) {Feed_Left(a_flag, b_flag);}
+               if (Motor_Z_Dir == ZCW) {Feed_Left(a_flag, b_flag);}
                else                   {Feed_Right(a_flag, b_flag);}
             }
             else if (Joy_X_flag == ON && Button_Rapid != 0 && Step_X_flag == ON)
@@ -45,7 +45,7 @@ void Read_ADC_Feed()
             if (Joy_Z_flag == ON && Button_Rapid != 0  && Step_Z_flag == ON)
             {
                b_flag = false;
-               if (Motor_Z_Dir == CW) {Cone_Left(a_flag, b_flag);}
+               if (Motor_Z_Dir == ZCW) {Cone_Left(a_flag, b_flag);}
                else                   {Cone_Right(a_flag, b_flag);}
             }
             else if (Joy_X_flag == ON && Button_Rapid != 0 && Step_X_flag == ON)
@@ -75,7 +75,7 @@ void Read_ADC_Feed()
             if (Joy_Z_flag == ON && Button_Rapid != 0  && Step_Z_flag == ON)
             {
                b_flag = false;
-               if (Motor_Z_Dir == CW) {aFeed_Left(a_flag, b_flag);}
+               if (Motor_Z_Dir == ZCW) {aFeed_Left(a_flag, b_flag);}
                else                   {aFeed_Right(a_flag, b_flag);}
             }
             else if (Joy_X_flag == ON && Button_Rapid != 0  && Step_X_flag == ON)

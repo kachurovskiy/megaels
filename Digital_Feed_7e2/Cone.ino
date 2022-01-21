@@ -40,7 +40,7 @@ void Cone_Left(bool & a_flag, bool & b_flag)
    Brake_Compens = max_OCR5A - Feed_Divisor + 1;
    Limit_Pos = Limit_Pos_Left - Brake_Compens;
 
-   Motor_Z_Dir = CW;
+   Motor_Z_Dir = ZCW;
    Motor_Z_CW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
 
@@ -91,7 +91,7 @@ void Cone_Right(bool & a_flag, bool & b_flag)
    Brake_Compens = max_OCR5A - Feed_Divisor + 1;
    Limit_Pos = Limit_Pos_Right + Brake_Compens;
 
-   Motor_Z_Dir = CCW;
+   Motor_Z_Dir = ZCCW;
    Motor_Z_CCW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
 
@@ -137,7 +137,7 @@ void Rapid_Cone_Left(bool & a_flag, bool & b_flag)
    Cs_Count = 0;
    Cm_Count = 0;            
 
-   Motor_Z_Dir = CW;
+   Motor_Z_Dir = ZCW;
    Motor_Z_CW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
 
@@ -163,7 +163,7 @@ void Rapid_Cone_Right(bool & a_flag, bool & b_flag)
    Cs_Count = 0;
    Cm_Count = 0;            
 
-   Motor_Z_Dir = CCW;
+   Motor_Z_Dir = ZCCW;
    Motor_Z_CCW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
 

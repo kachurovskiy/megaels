@@ -33,7 +33,7 @@ void Thread_Left(bool & c_flag, bool & d_flag)
    Km_Count = 0;
    Limit_Pos = Limit_Pos_Left - Brake_Compens;
 
-   Motor_Z_Dir = CW;
+   Motor_Z_Dir = ZCW;
    Motor_Z_CW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
    Joy_Z_flag = ON;
@@ -70,7 +70,7 @@ void Thread_Right(bool & c_flag, bool & d_flag)
    Km_Count = 0;
    Limit_Pos = Limit_Pos_Right + Brake_Compens;
 
-   Motor_Z_Dir = CCW;
+   Motor_Z_Dir = ZCCW;
    Motor_Z_CCW();
    if (Read_Z_Ena_State == false) Motor_Z_Enable();
    Joy_Z_flag = ON;
