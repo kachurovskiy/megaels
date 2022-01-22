@@ -8,6 +8,8 @@
 - Select `1x` or `10x` scale using the corresponding switch
 - Rotate the handwheel
 
+https://user-images.githubusercontent.com/517919/150651103-08cd070b-9684-408e-a8d9-eb8909226ac9.mp4
+
 1 impulse from the handwheel should correspond to 0.01mm movement of the motor in `1x`, 0.1mm in `10x`. If the motor doesn't move, try switching to submode to manual or switching mode to a different value.
 
 ### Moving the tool automatically
