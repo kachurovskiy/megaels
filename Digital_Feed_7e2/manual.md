@@ -1,4 +1,68 @@
-# Digital Feed ELS 7e2 Manual
+# Digital Feed Electronic Lead Screw 7e2
+
+## Quick Start
+
+### Moving the tool
+
+- Select `Z` or `X` axis using the corresponding switch
+- Select `1x` or `10x` scale using the corresponding switch
+- Rotate the handwheel
+
+1 impulse from the handwheel should correspond to 0.01mm movement of the motor in `1x`, 0.1mm in `10x`. If the motor doesn't move, try switching to submode to manual or switching mode to a different value.
+
+### Moving the tool automatically
+
+- Set mode to `Feed mm/min`
+- Set submode to manual
+- Use joystick to start/stop feeding into any of the 4 directions
+- Use the top-left potentiometer to change the speed.
+
+### Moving the tool based on the spindle rotation
+
+- Set mode to `Feed mm/rev`
+- Set submode to manual
+- Start the spindle
+- Use joystick to start/stop feeding into any of the 4 directions
+- Use the top-left potentiometer to change the speed
+
+### Cutting a manual thread
+
+Using the right-hand thread cut to the chuck as an example:
+
+- Set mode to `Thrd`
+- Set submode to manual
+- Use up/down menu buttons to select the pitch. For TPI pitches, scroll up through all the metric pitches.
+- Move the tool using the handwheel to the left-most `Z` position
+- Set the left limit using the corresponding button
+- Move the tool using the handwheel to the right-most `Z` position
+- Set the right limit using the corresponding button
+- Start the spindle
+- Move in the cutter (manually or using the handwheel)
+- Set joystick to "left" and wait for the tool to reach the left limit (don't stop the spindle)
+- Move the cutter out
+- Set joystick to "right" and wait for the tool to reach the right limit (don't stop the spindle), use joystick button for faster movement
+- Move in the cutter
+- Set joystick to "left" and so on
+
+### Cutting an automatic thread
+
+Using the right-hand thread cut to the chuck as an example:
+
+- Set mode to `Thrd`
+- Set submode to manual
+- Use up/down menu buttons to select the pitch. For TPI pitches, scroll up through all the metric pitches.
+- Move the tool using the handwheel to the left-most `Z` position
+- Set the left limit using the corresponding button
+- Start the spindle
+- Move the tool using the handwheel so that the cutter just barely touches the material
+- Move the tool using the handwheel to the right-most `Z` position
+- Set the right limit using the corresponding button
+- Set submode to external
+- Set joystick to "left" and wait for the operation to complete
+
+When done, set joystick to neutral and submode to manual to be able to use the handwheel again.
+
+# Manual
 
 Note: this is a slightly redacted automated translation of a manual written by Oleg A. and contributors from ChipMaker.ru. Use with caution.
 
