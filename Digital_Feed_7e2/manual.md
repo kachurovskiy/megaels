@@ -8,7 +8,7 @@
 - Select `1x` or `10x` scale using the corresponding switch
 - Rotate the handwheel
 
-https://user-images.githubusercontent.com/517919/150651103-08cd070b-9684-408e-a8d9-eb8909226ac9.mp4
+https://user-images.githubusercontent.com/517919/150657985-6fe1d571-e0b5-475b-9b13-4543c2c39b69.mp4
 
 1 impulse from the handwheel should correspond to 0.01mm movement of the motor in `1x`, 0.1mm in `10x`. If the motor doesn't move, try switching to submode to manual or switching mode to a different value.
 
@@ -18,6 +18,8 @@ https://user-images.githubusercontent.com/517919/150651103-08cd070b-9684-408e-a8
 - Set submode to manual
 - Use joystick to start/stop feeding into any of the 4 directions
 - Use the top-left potentiometer to change the speed.
+
+https://user-images.githubusercontent.com/517919/150658051-4663ad40-8815-415f-8046-cac0e11eda6a.mp4
 
 ### Moving the tool based on the spindle rotation
 
