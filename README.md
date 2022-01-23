@@ -81,26 +81,28 @@ https://user-images.githubusercontent.com/517919/150657985-6fe1d571-e0b5-475b-9b
 
 ### Turning of facing
 
+https://user-images.githubusercontent.com/517919/150658372-34b87c6c-d6d8-46ef-8bb0-31651cf59bb8.mp4
+
 - Set mode to `Feed mm/rev`
 - Set submode to manual
 - Start the spindle
 - Use joystick to start/stop feeding into any of the 4 directions
 - Use the top-left potentiometer to change the speed
 
-https://user-images.githubusercontent.com/517919/150658372-34b87c6c-d6d8-46ef-8bb0-31651cf59bb8.mp4
-
 ### Asynchronous feed (grinding)
+
+https://user-images.githubusercontent.com/517919/150658051-4663ad40-8815-415f-8046-cac0e11eda6a.mp4
 
 - Set mode to `Feed mm/min`
 - Set submode to manual
 - Use joystick to start/stop feeding into any of the 4 directions
 - Use the top-left potentiometer to change the speed.
 
-https://user-images.githubusercontent.com/517919/150658051-4663ad40-8815-415f-8046-cac0e11eda6a.mp4
-
 ### Threading
 
 Using the right-hand thread cut to the chuck as an example:
+
+https://user-images.githubusercontent.com/517919/150672370-4f7bad88-6a53-406b-a333-fa034ceace00.mp4
 
 - Set mode to `Thrd`
 - Set submode to manual
@@ -117,11 +119,11 @@ Using the right-hand thread cut to the chuck as an example:
 - Move in the cutter
 - Set joystick to "left" and so on
 
-https://user-images.githubusercontent.com/517919/150672370-4f7bad88-6a53-406b-a333-fa034ceace00.mp4
-
 ### Automatic threading
 
 Using the right-hand thread cut to the chuck as an example:
+
+https://user-images.githubusercontent.com/517919/150673123-4970087e-299d-4873-bf87-a3d265480593.mp4
 
 - Set mode to `Thrd`
 - Set submode to manual
@@ -135,9 +137,23 @@ Using the right-hand thread cut to the chuck as an example:
 - Set submode to external
 - Set joystick to "left" and wait for the operation to complete
 
-https://user-images.githubusercontent.com/517919/150673123-4970087e-299d-4873-bf87-a3d265480593.mp4
-
 When done, set joystick to neutral and submode to manual to be able to use the handwheel again.
+
+#### Manual follow-up after automatic threading
+
+When automatic threading is finished you can test fit and potentially make a few more passes:
+
+https://user-images.githubusercontent.com/517919/150681412-96608c69-1e91-40f1-9b8f-9cf68e4d7d45.mp4
+
+- Move joystick to neutral
+- Set submode to manual
+- Set joystick to "right" and press the joystick button to move past the right limit
+- Turn on the spindle (no need to reverse it) and wait for the cutter to move out of the way, turn off the spindle
+- Test fit the part
+- Set joystick to "left"
+- Turn on the spindle, move in the cutter, make another pass, it should stop at your existing left stop
+- Move out the cutter, no need to stop the spindle
+- Set joystick to "right", it should stop at your existing right stop, repeat until the part fits
 
 ## Manual
 
