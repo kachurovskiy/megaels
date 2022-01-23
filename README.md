@@ -117,6 +117,8 @@ Using the right-hand thread cut to the chuck as an example:
 - Move in the cutter
 - Set joystick to "left" and so on
 
+https://user-images.githubusercontent.com/517919/150672370-4f7bad88-6a53-406b-a333-fa034ceace00.mp4
+
 ### Automatic threading
 
 Using the right-hand thread cut to the chuck as an example:
@@ -132,6 +134,8 @@ Using the right-hand thread cut to the chuck as an example:
 - Set the right limit using the corresponding button
 - Set submode to external
 - Set joystick to "left" and wait for the operation to complete
+
+https://user-images.githubusercontent.com/517919/150673123-4970087e-299d-4873-bf87-a3d265480593.mp4
 
 When done, set joystick to neutral and submode to manual to be able to use the handwheel again.
 
