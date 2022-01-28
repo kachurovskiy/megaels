@@ -1,7 +1,5 @@
 **This software and instructions are provided as is, without warranty of any kind. This is a hobby project. Using this might damage your equipment, cause injury or death. Use at your own risk. Original author didn't state the lisence for the code so it remains unknown.**
 
-While the PCB is confirmed to work overall, it's very early days for this project and don't expect an easy ride if you go for it.
-
 # MegaEls
 
 Metal lathe electronic lead screw project built on top of Russian-speaking [DigitalFeed ELS system by Oleg A. and contributors from ChipMaker.ru](https://www.chipmaker.ru/topic/118083/).
