@@ -158,6 +158,17 @@ https://user-images.githubusercontent.com/517919/150681412-96608c69-1e91-40f1-9b
 - Move out the cutter, no need to stop the spindle
 - Set joystick to "right", it should stop at your existing right stop, repeat until the part fits
 
+### Cones
+
+https://user-images.githubusercontent.com/517919/151621173-53c0f2e1-b2ff-46d9-8cfa-94ba974be943.mp4
+
+- Set mode to `>` or `<`
+- Set submode to manual
+- Pick the cone angle using the menu buttons
+- Turn on the spindle
+- Use joystick "left" and "right" positions to move the cutter along the cone
+- Use joystick "forward" and "back" positions to move the cutter in or out
+
 ## Manual
 
 There are [some instructions explaining how to operate the ELS](https://github.com/kachurovskiy/megaels/blob/main/Digital_Feed_7e2/manual.md) that I auto-translated and corrected a bit but expect to invest some time here :)
