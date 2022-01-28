@@ -1,14 +1,15 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
-//////////////////////////////////
-// ***** HARDWARE PARAMS  ***** //
+// Hardware params
+// Each time you change these, Cone_Info and Thread_Info tables below must be re-calculated
 
 #define ENC_LINE_PER_REV     600      // Encoder lines per 1 spindle turn
 #define MOTOR_Z_STEP_PER_REV 200      // Z motor steps (leadscrew) - almost always 200, microsteps configured below
 #define SCREW_Z              200      // Z (leadscrew) pitch, in hundreds of a mm
 #define McSTEP_Z             4        // Z driver microsteps (400 steps = 2, 800 steps = 4, etc)
 #define Z_INVERT                      // Comment this line if Z motor is connected directly to the lead screw, uncomment if via belt
+// #define Z_ENA_INVERT                  // Comment/uncomment this line if Z motor is getting disabled when it should be enabled
 #define MOTOR_X_STEP_PER_REV 200      // X motor steps (cross-slide) - almost always 200, microsteps configured below
 #define SCREW_X              42       // X (cross-slide) pitch, in hundreds of a mm
 #define REBOUND_X            200      // X backlash in microsteps
@@ -18,24 +19,24 @@
 #define THRD_ACCEL           25       // К.деления с которого будем ускоряться на Резьбах, Accel+Ks должен быть < 255
 #define FEED_ACCEL           3        // Жесткость разгона на подачах, бОльше значение - короче разгон.
 //
-#define MIN_FEED             2        // Желаемая минимальная подача  в сотках/оборот, 0.02мм/об
-#define MAX_FEED             20       // Желаемая максимальная подача в сотках/оборот, 0.15мм/об
-#define MIN_aFEED            20       // Желаемая минимальная подача  в mm/минуту, 20мм/мин
-#define MAX_aFEED            400      // Желаемая максимальная подача в mm/минуту, 400мм/мин
+#define MIN_FEED             2        // Min feed in 0.01mm. 2 = 0.02mm
+#define MAX_FEED             20       // Max feed in 0.01mm. 20 = 0.20mm
+#define MIN_aFEED            20       // Min feed in mm/min. 20 = 20mm/min
+#define MAX_aFEED            400      // Max feed in mm/min. 400 = 400mm/min
 
-// Ускоренные перемещения                              
-#define MAX_RAPID_MOTION     25                       // Меньше - бОльшая конечная скорость           //16000000/32/((25+1)*2)/800*60=721rpm
-#define MIN_RAPID_MOTION    (MAX_RAPID_MOTION + 150)  // Больше - мЕньшая начальная скорость, max 255 //16000000/32/((150+25+1)*2)/800*60=107rpm
-#define REPEAt              (McSTEP_Z * 1)            // Кол-во повторов для постоянной скорости в пределах полного шага    
-                                                      // Длительность разгона = 150/2*REPEAT(4)/Microstep(4) = 75 полных шагов цикл ускорения
-// Ручной энкодер (100 линий)
+// Rapid feed           
+#define MAX_RAPID_MOTION     25                       // Smaller - faster           //16000000/32/((25+1)*2)/800*60=721rpm
+#define MIN_RAPID_MOTION    (MAX_RAPID_MOTION + 150)  // Bigger - slower, max 255 //16000000/32/((150+25+1)*2)/800*60=107rpm
+#define REPEAt              (McSTEP_Z * 1)            // Repeats for full speed within one step
+                                                      // Acceleration duration = 150/2*REPEAT(4)/Microstep(4) = 75 full steps for acceleration
+// Manual pulse generator (100 lines)
 #define HC_SCALE_1           1        // 1-e положение, масштаб = 1сотка/тик = 1мм/оборот
 #define HC_SCALE_10          10       // 2-e положение, масштаб = 10соток/тик = 10мм/оборот
 #define HC_START_SPEED_1     250      // старт РГИ, 250000/(250+1)/800*60/2 = 37rpm
 #define HC_MAX_SPEED_1       150      // максимум скорости РГИ, 250000/(150+1)/800*60/2 = 62rpm
 #define HC_START_SPEED_10    150      // старт РГИ, 250000/(150+1)/800*60/2 = 62rpm
 #define HC_MAX_SPEED_10      23       // максимум скорости РГИ, 250000/(23+1)/800*60/2 = 391rpm
-#define HC_X_DIR             0        // 1-поперечка по часовой, 0-против
+#define HC_X_DIR             0        // 1-CW, 0-CCW
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,9 +112,15 @@ char LCD_Row_2[17];
 #define Motor_X_CW()           PORTL &= ~(1<<5)    // Pin44 0
 #define Motor_X_CCW()          PORTL |= (1<<5)     // Pin44 1
 
-#define Motor_Z_Enable()   do {PORTL |= (1<<4); _delay_ms(120);} while(0)   // Pin45 1
-#define Motor_Z_Disable()      PORTL &= ~(1<<4)                             // Pin45 0
-#define Read_Z_Ena_State       (PINL & (1<<4))
+#ifdef Z_ENA_INVERT
+  #define Motor_Z_Enable()   do {PORTL &= ~(1<<4); _delay_ms(120);} while(0)  // Pin45 0
+  #define Motor_Z_Disable()      PORTL |= (1<<4)                              // Pin45 1
+  #define Read_Z_Ena_State       !(PINL & (1<<4))
+#else
+  #define Motor_Z_Enable()   do {PORTL |= (1<<4); _delay_ms(120);} while(0)   // Pin45 1
+  #define Motor_Z_Disable()      PORTL &= ~(1<<4)                             // Pin45 0
+  #define Read_Z_Ena_State       (PINL & (1<<4))
+#endif
 
 #define Motor_X_Enable()   do {PORTL |= (1<<3); _delay_ms(120);} while(0)   // Pin46 1
 #define Motor_X_Disable()      PORTL &= ~(1<<3)                             // Pin46 0
@@ -274,6 +281,8 @@ struct cone_info_type
   int  Cm_Div;
   char Cone_Print[6];
 };
+// This table must be re-calculated each time hardware parameters
+//  at the top change. Use !_Calc_v7e.xls to find the new values.
 const cone_info_type Cone_Info[] =
 {
    {  0,  8400,  "45dg" },
@@ -314,10 +323,12 @@ struct thread_info_type
   byte Pass;
   char Limit_Print[8];
 };
+// This table must be re-calculated each time hardware parameters
+//  at the top change. Use !_Calc_v7e.xls to find the new values.
 const thread_info_type Thread_Info[] =
-{                                                              // Считаем по формуле:
-   { 12,    0,    5,  400,   "0.25mm", 0.250,  4, " 750rpm" }, // Enc_Tick(3600)/(Step_Per_Revolution/Feed_Screw*Thread_mm)
-   { 10,    0,    4, 2000,   "0.30mm", 0.300,  4, " 750rpm" }, // Просчитан под 800 микрошагов/оборот винта (1/4 дробление, 1.5мм и 1.0мм шаг винтов)
+{
+   { 12,    0,    5,  400,   "0.25mm", 0.250,  4, " 750rpm" },
+   { 10,    0,    4, 2000,   "0.30mm", 0.300,  4, " 750rpm" },
    {  8, 5714,    3, 6000,   "0.35mm", 0.350,  4, " 750rpm" },
    {  7, 5000,    3, 1500,   "0.40mm", 0.400,  4, " 750rpm" },
    {  6,    0,    2, 5200,   "0.50mm", 0.500,  4, " 750rpm" },
