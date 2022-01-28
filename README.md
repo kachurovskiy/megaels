@@ -8,7 +8,14 @@ Metal lathe electronic lead screw project built on top of Russian-speaking [Digi
 
 ## Code
 
-Code is provided in the [folder above](https://github.com/kachurovskiy/megaels/tree/main/Digital_Feed_7e2). It requires tuning a few constants at the top of `Digital_Feed_7e2.ino` to fit your lathe and motors. Once those are changed, update `Cone_Info` and `Thread_Info` tables in the middle of that file using formulas in `!_Calc_v7e.xls`.
+Code is provided in the [folder above](https://github.com/kachurovskiy/megaels/tree/main/Digital_Feed_7e2). It requires tuning a few constants at the top of `Digital_Feed_7e2.ino` to fit your lathe and motors.
+
+Verify that hardware parameters are set correctly:
+
+- Use `mm/min` mode and a clock to ensure each axis moves in the right direction and by the expected amount of mm within 60 seconds
+- Use "Dividing head" mode (last one) to check that when you turn the spindle by hand in the "forward" direction, angle on screen increments from 0 to 360
+
+Every time hardware parameters change, update `Cone_Info` and `Thread_Info` tables in the middle of that file using formulas in `!_Calc_v7e.xls`. It takes about 10 minutes and I'm looking for ways to avoid this tedious operation. However, if you don't recalculate those tables at all, your threads and cones will come out wrong even when `mm/min` and dividing head tests above pass.
 
 ## PCB
 
