@@ -17,6 +17,8 @@ Verify that hardware parameters are set correctly:
 
 Every time hardware parameters change, update `Cone_Info` and `Thread_Info` tables in the middle of that file using formulas in `!_Calc_v7e.xls`. It takes about 10 minutes and I'm looking for ways to avoid this tedious operation. However, if you don't recalculate those tables at all, your threads and cones will come out wrong even when `mm/min` and dividing head tests above pass.
 
+To upload the code to your device, install Arduino IDE, connect your Arduino Mega to the computer via a USB cable, open `Digital_Feed_7e2.ino`, select `Arduino Mega 2560` in `Tools > Board` and click `Sketch > Upload`.
+
 ## PCB
 
 ![megaels_2012-12-05](https://user-images.githubusercontent.com/517919/146578632-993fc083-6fc4-4a29-a345-051907fbcaa5.jpg)
