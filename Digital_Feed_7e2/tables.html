@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lathe gear calculator</title>
+    <style>
+      body {
+        font-family: Roboto;
+        padding: 12px;
+        margin: 0 auto;
+        max-width: 600px;
+      }
+      input[type=text], input[type=number] {
+        display: block;
+        padding: 4px;
+        margin: 4px 0;
+        width: 15em;
+      }
+      input[type=button] {
+        height: 3em;
+        margin: 1em 0;
+        width: 10em;
+      }
+    </style>
+    <script>
+      let enc, zSteps, zPitch, xSteps, xPitch;
+
+      function readParams() {
+        enc = Number(document.getElementById('encoderInput').value);
+        if (!enc) {
+          alert('Please check encoder lines value');
+          return false;
+        }
+        zSteps = Number(document.getElementById('zStepsInput').value);
+        if (!zSteps) {
+          alert('Please check Z axis stepper driver steps value');
+          return false;
+        }
+        zPitch = Number(document.getElementById('zPitchInput').value);
+        if (!zPitch) {
+          alert('Please check Z pitch value');
+          return false;
+        }
+        xSteps = Number(document.getElementById('xStepsInput').value);
+        if (!xSteps) {
+          alert('Please check X axis stepper driver steps value');
+          return false;
+        }
+        xPitch = Number(document.getElementById('xPitchInput').value);
+        if (!xPitch) {
+          alert('Please check X pitch value');
+          return false;
+        }
+        return true;
+      }
+
+      function coneAngle(angle) {
+        return (xPitch/xSteps*2)/(zPitch/zSteps*Math.tan(angle*Math.PI/180));
+      }
+
+      function coneAB(a, b) {
+        return (xPitch/xSteps*b*2)/(zPitch/zSteps*a/2);
+      }
+
+      function leadingSpaces(x, numSpaces) {
+        let str = String(x);
+        while (str.length < numSpaces) {
+          str = ' ' + str;
+        }
+        return str;
+      }
+
+      function formatAsValue(x) {
+        return leadingSpaces(Math.floor(x), 3) + ', ' + leadingSpaces(Math.round((x - Math.floor(x)) * 10000), 4) + ', ';
+      }
+
+      function coneInfoRowAngle(angle) {
+        // {  0,  8400,  "45dg" },
+        return '  {' + formatAsValue(coneAngle(angle)) + '"' + leadingSpaces(angle, 2) + 'dg"' + '},\n';
+      }
+
+      function coneInfoRowAB(a, b, name) {
+        // {  32, 2762,  " KM0" },  // 1:19,212
+        if (!name) {
+          name = a + ':' + b;
+        }
+        return '  {' + formatAsValue(coneAB(a, b)) + '"' + leadingSpaces(name, 4) + '"' + '}, // ' + a + ':' + b + '\n';
+      }
+
+      function coneInfo() {
+        return 'const cone_info_type Cone_Info[] = {\n' +
+          coneInfoRowAngle(45) +
+          coneInfoRowAB(1, 19.212, 'KM0') +
+          coneInfoRowAB(1, 20.047, 'KM1') +
+          coneInfoRowAB(1, 20.020, 'KM2') +
+          coneInfoRowAB(1, 19.922, 'KM3') +
+          coneInfoRowAB(1, 19.254, 'KM4') +
+          coneInfoRowAB(1, 19.002, 'KM5') +
+          coneInfoRowAB(1, 19.180, 'KM6') +
+          coneInfoRowAB(1, 4) +
+          coneInfoRowAB(1, 5) +
+          coneInfoRowAB(1, 7) +
+          coneInfoRowAB(1, 10) +
+          coneInfoRowAB(1, 16) +
+          coneInfoRowAB(1, 20) +
+          coneInfoRowAB(1, 24) +
+          coneInfoRowAB(1, 30) +
+          coneInfoRowAB(1, 50) +
+          coneInfoRowAB(7, 64) +
+          coneInfoRowAngle(8) +
+          coneInfoRowAngle(10) +
+          coneInfoRowAngle(15) +
+          coneInfoRowAngle(30) +
+          '};';
+      }
+
+      function zThreadMm(pitchMm) {
+        return enc*2/(zSteps/zPitch*pitchMm);
+      }
+
+      function xThreadMm(pitchMm) {
+        return enc*2/(xSteps/xPitch*pitchMm);
+      }
+
+      function zThreadTpi(tpi) {
+        return zThreadMm(25.4/tpi);
+      }
+
+      function xThreadTpi(tpi) {
+        return xThreadMm(25.4/tpi);
+      }
+
+      function threadMm(pitch, passes, maxRpm) {
+        // { 12,    0,    5,  400,   "0.25mm", 0.250,  4, " 750rpm" },
+        return '  {' + formatAsValue(zThreadMm(pitch)) + formatAsValue(xThreadMm(pitch)) + '"' + pitch.toFixed(2) + 'mm", ' + pitch.toFixed(3) + ', ' + passes + ', "' + leadingSpaces(String(maxRpm) + 'rpm', 7) + '"},\n';
+      }
+
+      function threadTpi(tpi, passes, maxRpm) {
+        // {  9, 4488,    3, 9685,   "80tpi ", 0.318,  4, " 750rpm" },
+        return '  {' + formatAsValue(zThreadTpi(tpi)) + formatAsValue(xThreadTpi(tpi)) + '"' + leadingSpaces(tpi, 2) + 'tpi ", ' + (25.4/tpi).toFixed(3) + ', ' + passes + ', "' + leadingSpaces(String(maxRpm) + 'rpm', 7) + '"},\n';
+      }
+
+      function threads() {
+        return 'const thread_info_type Thread_Info[] = {\n' +
+          threadMm(0.25, 4, 750) +
+          threadMm(0.30, 4, 750) +
+          threadMm(0.35, 4, 750) +
+          threadMm(0.40, 4, 750) +
+          threadMm(0.50, 4, 750) +
+          threadMm(0.60, 4, 750) +
+          threadMm(0.70, 4, 750) +
+          threadMm(0.75, 5, 750) +
+          threadMm(0.80, 5, 700) +
+          threadMm(1.00, 6, 560) +
+          threadMm(1.25, 7, 460) +
+          threadMm(1.50, 7, 380) +
+          threadMm(1.75, 8, 320) +
+          threadMm(2.00, 9, 280) +
+          threadMm(2.50, 11, 220) +
+          threadMm(3.00, 15, 190) +
+          threadMm(4.00, 22, 140) +
+          '\n' +
+          threadTpi(80, 4, 750) +
+          threadTpi(72, 4, 750) +
+          threadTpi(64, 4, 750) +
+          threadTpi(60, 4, 750) +
+          threadTpi(56, 4, 750) +
+          threadTpi(48, 4, 750) +
+          threadTpi(44, 4, 750) +
+          threadTpi(40, 4, 750) +
+          threadTpi(36, 5, 750) +
+          threadTpi(32, 5, 710) +
+          threadTpi(28, 5, 650) +
+          threadTpi(27, 5, 600) +
+          threadTpi(26, 6, 570) +
+          threadTpi(24, 6, 500) +
+          threadTpi(22, 6, 450) +
+          threadTpi(20, 7, 440) +
+          threadTpi(19, 7, 420) +
+          threadTpi(18, 7, 380) +
+          threadTpi(16, 8, 350) +
+          threadTpi(14, 9, 320) +
+          threadTpi(12, 10, 270) +
+          threadTpi(10, 11, 220) +
+          threadTpi(9, 14, 190) +
+          threadTpi(8, 16, 170) +
+          threadTpi(7, 19, 150) +
+          threadTpi(6, 24, 140) +
+          '};';
+      }
+
+      function calculate() {
+        document.getElementById('solutions').innerText = '';
+
+        if (!readParams()) {
+          return;
+        }
+
+        document.getElementById('solutions').innerHTML =
+          '<pre>' + coneInfo() + '\n\n' + threads() + '</pre>';
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Digital Feed 7e2 table calculator</h1>
+    <p>Use this page to re-calculate <code>Cone_Info</code> and <code>Thread_Info</code> tables in your <code>Digital_Feed_7e2.ino</code>.</p>
+    <h2>Inputs</h2>
+    <label for="gearsInput">Encoder lines per revolution:</label>
+    <input id="encoderInput" type="number" min="100" max="3000" value="600" required>
+
+    <label for="leadScrewPitchInput">Z driver steps:</label>
+    <input id="zStepsInput" type="number" min="200" max="3200" step="200" value="800" required>
+
+    <label for="leadScrewPitchInput">Z axis pitch in mm:</label>
+    <input id="zPitchInput" type="number" min="1" max="16" value="2" required>
+
+    <label for="leadScrewPitchInput">X driver steps:</label>
+    <input id="xStepsInput" type="number" min="200" max="3200" step="200" value="800" required>
+
+    <label for="leadScrewPitchInput">X axis pitch in mm:</label>
+    <input id="xPitchInput" type="number" min="1" max="16" value="1.25" required
+        onsubmit="calculate()" onkeypress="event.key == 'Enter' && calculate()">
+
+    <input type="button" value="Calculate" onclick="calculate()">
+
+    <p id="solutions"></p>
+  </body>
+</html>
