@@ -46,7 +46,9 @@ void H_Coder()
    if (hand_Z == ON)
    {
       Disa_INT_Hcoder();
-      Hand_Count_New = Hand_Count;
+      //Hand_Count_New = Hand_Count;
+      if (HC_Z_DIR == 0) {Hand_Count_New = Hand_Count;}
+      else               {Hand_Count_New = Hand_Count - Hand_Count *2;}
       Ena_INT_Hcoder();
       
       if (Hand_Count_New != Hand_Count_Old)
