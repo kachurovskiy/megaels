@@ -1,7 +1,7 @@
 void H_Coder()
 {
    ///////////////
-   // Масштаб
+   // Scale
    ///////////////
    if (Motor_Z_Pos == Null_Z_Pos + Hand_Z_Pos && Motor_X_Pos == Null_X_Pos + Hand_X_Pos)
    {
@@ -40,7 +40,7 @@ void H_Coder()
    }
    
    /////////////////
-   // Активная ось 
+   // active axis
    /////////////////
    /////////////////
    if (hand_Z == ON)
