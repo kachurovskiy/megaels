@@ -16,8 +16,8 @@
 #define REBOUND_Z            200      // Z backlash in microsteps
 #define McSTEP_X             2        // Z driver microsteps (400 steps = 2, 800 steps = 4, etc)
 //
-#define THRD_ACCEL           25       // К.деления с которого будем ускоряться на Резьбах, Accel+Ks должен быть < 255
-#define FEED_ACCEL           3        // Жесткость разгона на подачах, бОльше значение - короче разгон.
+#define THRD_ACCEL           25       // K. division from which we will accelerate on Threads, Accel+Ks should be < 255
+#define FEED_ACCEL           3        // Rigidity of acceleration at feeds, more value - shorter acceleration.
 //
 #define MIN_FEED             2        // Min feed in 0.01mm. 2 = 0.02mm
 #define MAX_FEED             20       // Max feed in 0.01mm. 20 = 0.20mm
@@ -30,34 +30,34 @@
 #define REPEAt              (McSTEP_Z * 1)            // Repeats for full speed within one step
                                                       // Acceleration duration = 150/2*REPEAT(4)/Microstep(4) = 75 full steps for acceleration
 // Manual pulse generator (100 lines)
-#define HC_SCALE_1           1        // 1-e положение, масштаб = 1сотка/тик = 1мм/оборот
-#define HC_SCALE_10          10       // 2-e положение, масштаб = 10соток/тик = 10мм/оборот
-#define HC_START_SPEED_1     250      // старт РГИ, 250000/(250+1)/800*60/2 = 37rpm
-#define HC_MAX_SPEED_1       150      // максимум скорости РГИ, 250000/(150+1)/800*60/2 = 62rpm
-#define HC_START_SPEED_10    150      // старт РГИ, 250000/(150+1)/800*60/2 = 62rpm
-#define HC_MAX_SPEED_10      23       // максимум скорости РГИ, 250000/(23+1)/800*60/2 = 391rpm
+#define HC_SCALE_1           1        // 1st position, scale = 100/tick = 1mm/rev
+#define HC_SCALE_10          10       // 2nd position, scale = 1000/tick = 10mm/revolution
+#define HC_START_SPEED_1     250      // RGI start, 250000/(250+1)/800*60/2 = 37rpm
+#define HC_MAX_SPEED_1       150      // maximum RGI speed, 250000/(150+1)/800*60/2 = 62rpm
+#define HC_START_SPEED_10    150      // RGI start, 250000/(150+1)/800*60/2 = 62rpm
+#define HC_MAX_SPEED_10      23       // maximum RGI speed, 250000/(23+1)/800*60/2 = 391rpm
 #define HC_X_DIR             0        // 1-CW, 0-CCW
 #define HC_Z_DIR             0        // 1-CW, 0-CCW
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 #define a  (uint32_t)(ENC_LINE_PER_REV / ((float)MOTOR_Z_STEP_PER_REV * McSTEP_Z * MIN_FEED / SCREW_Z) /2 +0.5)
-static_assert(a <= 255, "Неверно задано значение MIN_FEED");
+static_assert(a <= 255, "Invalid value MIN_FEED");
 #define b  (uint32_t)(ENC_LINE_PER_REV / ((float)MOTOR_Z_STEP_PER_REV * McSTEP_Z * MAX_FEED / SCREW_Z) /2 +0.5)
-static_assert(b > 1, "Неверно задано значение MAX_FEED");
+static_assert(b > 1, "Invalid value MAX_FEED");
 #define c  250000 / ((uint32_t)MIN_aFEED * MOTOR_Z_STEP_PER_REV * McSTEP_Z / ((uint32_t)60 * SCREW_Z / 100) * 2) -1
-static_assert(c <= 65535, "Неверно задано значение MIN_aFEED");
+static_assert(c <= 65535, "Invalid value MIN_aFEED");
 #define d  250000 / ((uint32_t)MAX_aFEED * MOTOR_Z_STEP_PER_REV * McSTEP_Z / ((uint32_t)60 * SCREW_Z / 100) * 2) -1
-static_assert(d > 1, "Неверно задано значение MAX_aFEED");
+static_assert(d > 1, "Invalid value MAX_aFEED");
 
 #define e  (uint32_t)(ENC_LINE_PER_REV / ((float)MOTOR_X_STEP_PER_REV * McSTEP_X * MIN_FEED / SCREW_X) /2 +0.5)
-static_assert(e <= 255, "Неверно задано значение MIN_FEED");
+static_assert(e <= 255, "Invalid value MIN_FEED");
 #define f  (uint32_t)(ENC_LINE_PER_REV / ((float)MOTOR_X_STEP_PER_REV * McSTEP_X * MAX_FEED / SCREW_X) /2 +0.5)
-static_assert(f > 1, "Неверно задано значение MAX_FEED");
+static_assert(f > 1, "Invalid value MAX_FEED");
 #define g  250000 / ((uint32_t)MIN_aFEED * MOTOR_X_STEP_PER_REV * McSTEP_X / ((uint32_t)60 * SCREW_X / 100) * 2) -1
-static_assert(g <= 65535, "Неверно задано значение MIN_aFEED");
+static_assert(g <= 65535, "Invalid value MIN_aFEED");
 #define h  250000 / ((uint32_t)MAX_aFEED * MOTOR_X_STEP_PER_REV * McSTEP_X / ((uint32_t)60 * SCREW_X / 100) * 2) -1
-static_assert(h > 1, "Неверно задано значение MAX_aFEED");
+static_assert(h > 1, "Invalid value MAX_aFEED");
 //////////////////////////////////////////////////////////
 
 
@@ -134,16 +134,16 @@ char LCD_Row_2[17];
 
 
 // ***** Encoder *****
-#define ENC_TICK              (ENC_LINE_PER_REV * 2)    // Рабочее кол-во импульсов
+#define ENC_TICK              (ENC_LINE_PER_REV * 2)    // Working number of impulses
 #define Encoder_Init()         DDRD = B00000000;\
-                               PORTD = B11111111        // подтяжка PIN_21, 20, 19, 18
+                               PORTD = B11111111        // tightening PIN_21, 20, 19, 18
 #define Enc_Read              (PIND & (1<<1))
 #define Enc_Ch_A              (PIND & (1<<0))
 #define Enc_Ch_B              (PIND & (1<<1))
  
 
 
-// ***** Hand_Coder *****            // Z/X: Input-E4,E5, подтяжка-E4,E5, X1/X10: Input-J0,J1, подтяжка-J0,J1.
+// ***** Hand_Coder *****            // Z/X: Input-E4,E5, Pull-E4,E5, X1/X10: Input-J0,J1, Pull-J0,J1..
 #define Hand_Init()            DDRE = B00000000;\
                                PORTE = B11111111;\
                                DDRJ = B00000000;\
@@ -161,7 +161,7 @@ byte Hand_Scale_Old = 0;
 
 //***** Limit Buttons & LEDs *****
 #define Limit_Init()           DDRA = B10101010;\
-                               PORTA = B01010101    // IN-A0,A2,A4,A6, OUT-A1,A3,A5,A7, подтяжка
+                               PORTA = B01010101    // IN-A0,A2,A4,A6, OUT-A1,A3,A5,A7, facelift
 
 #define Limit_Buttons_Read    (PINA & B01010101)    // PA0 Pin22, PA2 Pin24, PA4 Pin26, PA6 Pin28.
 byte Limit_Button_Old = 0;
@@ -192,7 +192,7 @@ bool key_sel_flag = false;
 
 //////////////////
 #define Joy_Init()             DDRK = B00000000;\
-                               PORTK = B11111111;    // подтяжка PIN_A8, A9, A10, A11, A12 // Submode Sw: A13, A14, A15
+                               PORTK = B11111111;    // facelift PIN_A8, A9, A10, A11, A12 // Submode Sw: A13, A14, A15
 
 #define Joy_Read              (PINK & B00001111)     // PK0 PK1 PK2 PK3
 #define Button_Rapid          (PINK & B00010000)     // PK4
@@ -205,7 +205,7 @@ byte Submode_Old = 0;
 
 // ***** Mode *****
 #define Mode_Switch_Init()     DDRC = B00000000;\
-                               PORTC = B11111111;        // подтяжка PORT_A, ОБЯЗАТЕЛЬНА! внешняя подтяжка к +5 через 1К резисторы
+                               PORTC = B11111111;        // PORT_A pullup, MANDATORY! external pull-up to +5 through 1K resistors
 #define Mode_Read             (PINC & B11111111)
 byte Mode_Old = 0;
 
@@ -258,11 +258,11 @@ enum Sub_Mode_Sphere
 };
 
 
-//***** Ускоренное перемещение *****
+//***** Fast travel *****
 #define Timer2_Init()          TCCR2A = (1<<WGM21);\
                                TCCR2B = (1<<CS20)|(1<<CS21); // 16MHz/32 = 500kHz
 
-//***** РГИ перемещение *****
+//***** RGI moving *****
 #define Timer3_Init()          TCCR3A = 0;\
                                TCCR3B = (1<<WGM32)|(1<<CS30)|(1<<CS31); // 16MHz/32 = 250kHz
 
@@ -374,8 +374,8 @@ const thread_info_type Thread_Info[] = {
 #define TOTAL_THREADS (sizeof(Thread_Info) / sizeof(Thread_Info[0]))
 #define PASS_FINISH   3 // THRD_PS_FN ???
 
-#define Thrd_Accel_Err Thread_Info[0].Ks_Div_Z                 // неверно задано ускорение
-//static_assert(Thrd_Accel_Err + THRD_ACCEL <= 255, "Неверно задано значение THRD_ACCEL");
+#define Thrd_Accel_Err Thread_Info[0].Ks_Div_Z                 // acceleration set incorrectly
+//static_assert(Thrd_Accel_Err + THRD_ACCEL <= 255, "Invalid value THRD_ACCEL");
 
 
 // ***** Interrupts *****
@@ -521,10 +521,10 @@ bool hand_X = OFF;
 bool hand_Z = OFF;
 bool flag_hand_X = OFF;
 bool flag_hand_Z = OFF;
-bool X_flag = OFF;                    // временный
-bool Z_flag = OFF;                    // временный
-bool flag_Scale_x1 = OFF;             // возможно только для отладки
-bool flag_Scale_x10 = OFF;            // возможно только для отладки
+bool X_flag = OFF;                    // temporary
+bool Z_flag = OFF;                    // temporary
+bool flag_Scale_x1 = OFF;             // only possible for debugging
+bool flag_Scale_x10 = OFF;            // only possible for debugging
 bool control_flag = OFF;
 bool flag_j = OFF;
 
@@ -583,7 +583,7 @@ uint16_t Feed_mm = 0;
 uint16_t aFeed_mm = 0;
 
 uint16_t Start_Speed = ENC_LINE_PER_REV / ((uint32_t)MOTOR_Z_STEP_PER_REV * McSTEP_Z * MIN_FEED / SCREW_Z) /FEED_ACCEL;
-uint16_t max_OCR5A = ENC_LINE_PER_REV / ((uint32_t)MOTOR_Z_STEP_PER_REV * McSTEP_Z * MIN_FEED / SCREW_Z) /FEED_ACCEL;                                                                                     // Начальная скорость подачи при разгоне/торможении
+uint16_t max_OCR5A = ENC_LINE_PER_REV / ((uint32_t)MOTOR_Z_STEP_PER_REV * McSTEP_Z * MIN_FEED / SCREW_Z) /FEED_ACCEL;                                                                                     // Ð�Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ� Ñ�ÐºÐ¾Ñ€Ð¾Ñ�Ñ‚ÑŒ Ð¿Ð¾Ð´Ð°Ñ‡Ð¸ Ð¿Ñ€Ð¸ Ñ€Ð°Ð·Ð³Ð¾Ð½Ðµ/Ñ‚Ð¾Ñ€Ð¼Ð¾Ð¶ÐµÐ½Ð¸Ð¸
 uint16_t max_OCR4A = (250000 / ((uint32_t)MIN_aFEED * MOTOR_Z_STEP_PER_REV * McSTEP_Z / ((uint32_t)60 * SCREW_Z / 100) * 2) - 1) /FEED_ACCEL;
 
 byte Total_Tooth = 1;
@@ -638,10 +638,10 @@ void setup()
   DDRG = B11111111;
   
   TIMSK0 = 0;
-  // ***** Timer0 ***** // ***** Тахометр *****
+  // ***** Timer0 ***** // ***** Tachometer *****
 //  TCCR0A = (1<<COM0B0)|(1<<WGM01); // Toggle OC0B on Compare Match // CTC Mode2
 //  TCCR0B = (1<<CS00);     // No Prescaler
-//  OCR0A = 89; // 1800/10(выходных пульсов)/2-1 = 89
+//  OCR0A = 89; // 1800/10(output pulses)/2-1 = 89
 //  TIMSK0 = (1<<OCIE0B);
     
   Encoder_Init();
@@ -705,8 +705,8 @@ void loop()
   Read_ADC_Feed();
   if (KEYB_TIMER_FLAG != 0) Menu();
   
-  if (Mode == Mode_Divider) Print(); // пока для теста !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//  Print();                         // тоько для теста !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  if (Mode == Mode_Divider) Print(); // bye for the test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//  Print();                         // just for test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
 
@@ -895,7 +895,7 @@ ISR(INT1_vect)
 // *****  Tacho ***** ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-ISR (TIMER0_COMPB_vect)                                 // Тахометр
+ISR (TIMER0_COMPB_vect)                                 // Tachometer
 {
    //   
 }
@@ -1013,7 +1013,7 @@ ISR (TIMER5_COMPB_vect)
    }
 
    /////////////////////////////////////////////////////////
-   if (Mode == Mode_Sphere)                               // Режим Сфера
+   if (Mode == Mode_Sphere)                               // Sphere mode
    {
       
    }
