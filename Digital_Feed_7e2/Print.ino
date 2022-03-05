@@ -89,7 +89,7 @@ void Print()
       snprintf(LCD_Row_2, 17, "Rea:%3ld.%02ld a:%3d", Spindle_Angle/100, Spindle_Angle%100, Current_Tooth);
    }
 
-   // Печать ошибки
+   // Print error
    if      (err_1_flag == true) snprintf(LCD_Row_2, 17, "Limits not Set  ");
    else if (err_2_flag == true) snprintf(LCD_Row_2, 17, "Move to Init Pos");   
       
