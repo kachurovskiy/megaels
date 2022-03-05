@@ -32,10 +32,10 @@
 // Manual pulse generator (100 lines)
 #define HC_SCALE_1           1        // 1st position, scale = 100/tick = 1mm/rev
 #define HC_SCALE_10          10       // 2nd position, scale = 1000/tick = 10mm/revolution
-#define HC_START_SPEED_1     250      // RGI start, 250000/(250+1)/800*60/2 = 37rpm
-#define HC_MAX_SPEED_1       150      // maximum RGI speed, 250000/(150+1)/800*60/2 = 62rpm
-#define HC_START_SPEED_10    150      // RGI start, 250000/(150+1)/800*60/2 = 62rpm
-#define HC_MAX_SPEED_10      23       // maximum RGI speed, 250000/(23+1)/800*60/2 = 391rpm
+#define HC_START_SPEED_1     250      // MPG start, 250000/(250+1)/800*60/2 = 37rpm
+#define HC_MAX_SPEED_1       150      // maximum MPG speed, 250000/(150+1)/800*60/2 = 62rpm
+#define HC_START_SPEED_10    150      // MPG start, 250000/(150+1)/800*60/2 = 62rpm
+#define HC_MAX_SPEED_10      23       // maximum MPG speed, 250000/(23+1)/800*60/2 = 391rpm
 #define HC_X_DIR             0        // 1-CW, 0-CCW
 #define HC_Z_DIR             0        // 1-CW, 0-CCW
 
@@ -136,7 +136,7 @@ char LCD_Row_2[17];
 // ***** Encoder *****
 #define ENC_TICK              (ENC_LINE_PER_REV * 2)    // Working number of impulses
 #define Encoder_Init()         DDRD = B00000000;\
-                               PORTD = B11111111        // tightening PIN_21, 20, 19, 18
+                               PORTD = B11111111        // Pull up PIN_21, 20, 19, 18
 #define Enc_Read              (PIND & (1<<1))
 #define Enc_Ch_A              (PIND & (1<<0))
 #define Enc_Ch_B              (PIND & (1<<1))
@@ -161,7 +161,7 @@ byte Hand_Scale_Old = 0;
 
 //***** Limit Buttons & LEDs *****
 #define Limit_Init()           DDRA = B10101010;\
-                               PORTA = B01010101    // IN-A0,A2,A4,A6, OUT-A1,A3,A5,A7, facelift
+                               PORTA = B01010101    // IN-A0,A2,A4,A6, OUT-A1,A3,A5,A7, Pull up/down
 
 #define Limit_Buttons_Read    (PINA & B01010101)    // PA0 Pin22, PA2 Pin24, PA4 Pin26, PA6 Pin28.
 byte Limit_Button_Old = 0;
@@ -192,7 +192,7 @@ bool key_sel_flag = false;
 
 //////////////////
 #define Joy_Init()             DDRK = B00000000;\
-                               PORTK = B11111111;    // facelift PIN_A8, A9, A10, A11, A12 // Submode Sw: A13, A14, A15
+                               PORTK = B11111111;    // Pull up/down  PIN_A8, A9, A10, A11, A12 // Submode Sw: A13, A14, A15
 
 #define Joy_Read              (PINK & B00001111)     // PK0 PK1 PK2 PK3
 #define Button_Rapid          (PINK & B00010000)     // PK4
@@ -205,7 +205,7 @@ byte Submode_Old = 0;
 
 // ***** Mode *****
 #define Mode_Switch_Init()     DDRC = B00000000;\
-                               PORTC = B11111111;        // PORT_A pullup, MANDATORY! external pull-up to +5 through 1K resistors
+                               PORTC = B11111111;        // PORT_A pull up, MANDATORY! external pull-up to +5 through 1K resistors
 #define Mode_Read             (PINC & B11111111)
 byte Mode_Old = 0;
 
@@ -262,7 +262,7 @@ enum Sub_Mode_Sphere
 #define Timer2_Init()          TCCR2A = (1<<WGM21);\
                                TCCR2B = (1<<CS20)|(1<<CS21); // 16MHz/32 = 500kHz
 
-//***** RGI moving *****
+//***** MPG moving *****
 #define Timer3_Init()          TCCR3A = 0;\
                                TCCR3B = (1<<WGM32)|(1<<CS30)|(1<<CS31); // 16MHz/32 = 250kHz
 
