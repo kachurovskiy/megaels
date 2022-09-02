@@ -6,6 +6,10 @@ Metal lathe electronic lead screw project built on top of Russian-speaking [Digi
 
 ![megaels-example](https://user-images.githubusercontent.com/517919/147279909-92772466-749f-495c-bee4-87cd6dff6e9c.jpg)
 
+## ⚡ Looking for resellers and manufacturers 💲
+
+If you're willing to manufacture this device and/or sell it as a kit, we'd be happy to link to your page for free - especially if it makes the build cheaper than buying all the components separately.
+
 ## Code
 
 Code is provided in the [folder above](https://github.com/kachurovskiy/megaels/tree/main/Digital_Feed_7e2). It requires tuning a few constants at the top of `Digital_Feed_7e2.ino` to fit your lathe and motors.
