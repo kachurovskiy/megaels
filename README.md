@@ -33,8 +33,6 @@ Some PCB production techniques use lead and other nasty stuff. Order at your own
 
 Ordering it from JLCPCB.com takes just a few clicks - upload the ZIP file, use all default settings, choose shipping and checkout. Costs around 20 euro with delivery for 5 PCBs (minumum order).
 
-Cheaper, country-specific options: [Ukraine](https://www.olx.ua/d/uk/obyavlenie/elektronna-gtara-dlya-tokarnogo-verstata-na-arduino-megaels-nanoels-IDPnBwt.html) (feel free to add more)
-
 ## Components
 
 - [Arduino Mega 2560](https://www.aliexpress.com/item/32850843888.html) (micro USB)
