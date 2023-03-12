@@ -1,6 +1,6 @@
 void Read_ADC_Feed()
 {
-   /////////// Переменник Подачи ///////////
+   /////////// Feed Variable ///////////
    if (Mode == Mode_Feed || Mode == Mode_Cone_L || Mode == Mode_Cone_R || Mode == Mode_aFeed || Mode == Mode_Sphere)
    {
       int New_ADC_Feed = analogRead(A7);
